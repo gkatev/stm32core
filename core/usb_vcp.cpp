@@ -43,10 +43,6 @@
 
 #include "usb_vcp.h"
 
-/* TODO
- * USB Suspend/Resume? Power saving? Instead of DTR?
- */
-
 // ---------------------------------
 
 #define USB_CDC_REQ_SEND_BREAK 0x23
@@ -408,7 +404,7 @@ void vcp_init() {
 	
 	usbd_register_set_config_callback(g_usbd_dev, vcp_set_config);
 	
-	*USB_CNTR_REG &= ~0xFF00 | USB_CNTR_CTRM | USB_CNTR_RESETM;
+	*USB_CNTR_REG &= USB_CNTR_CTRM | USB_CNTR_RESETM | 0x00FF;
 	
 	nvic_set_priority(NVIC_USB_LP_CAN_RX0_IRQ, 0x88);
 	nvic_enable_irq(NVIC_USB_LP_CAN_RX0_IRQ);
