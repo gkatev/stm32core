@@ -187,6 +187,11 @@ static void usbdfu_getstatus_complete(usbd_device *usbd_dev, struct usb_setup_da
 		write_magic_word(MAGICWORD_LOAD_APP);
 		kill_usb();
 		
+		/* Wait ~100us (stm32f103). This appears to be
+		 * necessary in specific USB environments. */
+		for(i = 0; i < 1200; i++)
+			__asm__("nop");
+		
 		scb_reset_system();
 		
 		return; /* Will never return. */

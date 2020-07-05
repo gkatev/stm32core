@@ -226,7 +226,6 @@ static enum usbd_request_return_codes vcp_control_request(
 		struct usb_setup_data *req)) {
 	
 	switch (req->bRequest) {
-		
 		case USB_CDC_REQ_SET_CONTROL_LINE_STATE:
 			g_usbd_is_connected = req->wValue & 1;
 			
@@ -241,6 +240,11 @@ static enum usbd_request_return_codes vcp_control_request(
 		case USB_CDC_REQ_SEND_BREAK:
 			write_dfu_magicword();
 			kill_usb();
+			
+			/* Wait ~100us (stm32f103). This appears to be
+			 * necessary in specific USB environments. */
+			for(uint i = 0; i < 1200; i++)
+				__asm__("nop");
 			
 			scb_reset_system();
 			
