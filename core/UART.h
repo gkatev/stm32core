@@ -37,7 +37,6 @@ class UART_VIRTUAL {
 		virtual void init(uint32_t bitrate) = 0;
 		
 		virtual void write(uint8_t data) = 0;
-		// virtual void write(uint8_t *data, size_t count) = 0;
 		virtual void write(void *data, size_t count) = 0;
 		uint8_t read();
 		
@@ -62,7 +61,6 @@ class UART_VIRTUAL {
 			void init(uint32_t bitrate);
 			
 			void write(uint8_t data);
-			// void write(uint8_t *data, size_t count);
 			void write(void *data, size_t count);
 	} UART1;
 	

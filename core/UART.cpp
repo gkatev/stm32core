@@ -81,7 +81,6 @@ constexpr char radix_digits[] = {'0', '1', '2', '3', '4', '5',
 		}
 	}
 	
-	// void _UART1::write(uint8_t *data, size_t count) {
 	void _UART1::write(void *data, size_t count) {
 		for(size_t i = 0; i < count; i++)
 			write(((uint8_t *) data)[i]);
