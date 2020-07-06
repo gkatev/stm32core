@@ -68,7 +68,7 @@ mini_itoa(int value, unsigned int radix, unsigned int uppercase, unsigned int un
 	int	negative = 0;
 	unsigned int	i, len;
 
-	/* No support for unusual radixes. */
+	/* No support for unusual radices. */
 	if (radix > 16)
 		return 0;
 
