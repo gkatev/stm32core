@@ -3,15 +3,10 @@
 
 #include <cstdint>
 #include <cstddef>
-
-typedef unsigned int uint;
-typedef unsigned long ulong;
+#include <sys/types.h>
 
 typedef unsigned long long ullong;
 typedef long long llong;
-
-// typedef uint32_t size_t;
-typedef int32_t ssize_t;
 
 struct iovec {
 	void *iov_base;
