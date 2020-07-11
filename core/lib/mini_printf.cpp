@@ -48,7 +48,7 @@
  */
 
 #include <string.h>
-#include <core/types.h>
+#include <sys/types.h>
 
 #include "mini_printf.h"
 
@@ -147,6 +147,15 @@ size_t mini_vsnprintf(struct iovec iov[], size_t iov_len,
 		return _puts(&ch, 1);
 	};
 	
+	// Reserve space for NULL terimator
+	size_t lastnz_iov_idx = iov_len - 1;
+	for(; lastnz_iov_idx >= 0; lastnz_iov_idx--) {
+		if(iov[lastnz_iov_idx].iov_len > 0) {
+			iov[lastnz_iov_idx].iov_len--;
+			break;
+		}
+	}
+	
 	while ((ch=*(fmt++))) {
 		
 		if(iov_idx == iov_len)
@@ -239,6 +248,18 @@ size_t mini_vsnprintf(struct iovec iov[], size_t iov_len,
 	}
 	
 end:
+	
+	if(_putc('\0'))
+		written--;
+	else if(lastnz_iov_idx >= 0) {
+		iov_idx = lastnz_iov_idx;
+		base_idx = iov[iov_idx].iov_len;
+		iov[iov_idx].iov_len++;
+		
+		_putc('\0');
+		written--;
+	}
+
 	return written;
 }
 
